@@ -15,7 +15,7 @@
 	{
 		// Get Values
 		$iArticleId 		= $value1['id'];
-		$aArticle 			= $client->get('articles/'. $iArticleId )['data']; // API Get Property Group
+		$aArticle 		= $client->get('articles/'. $iArticleId )['data']; // API Get Property Group
 		$iPropertyGroupId 	= $aArticle['propertyGroup']['id'];
 		$aPropertyGroup 	= $client->get('propertyGroups/'. $iPropertyGroupId )['data'];  // API: Get Property Group
 		$aPropertyOptions 	= $aPropertyGroup['options'];
