@@ -1,7 +1,7 @@
 <?php
 
-	include_once ('./includes/api.php');
-	include_once ('./includes/config.php');
+	include_once ('includes/api.php');
+	include_once ('includes/config.php');
 
 	$client = new ApiClient(API_URL, USERNAME, PASSWORD);
 
@@ -152,8 +152,10 @@
 	// Write all Events to File
 	$jEvents = json_encode($aEvents);
 
-	if($jEvents) {
-		file_put_contents('../public_html/vuetify_public/dist/public_events.json', json_encode($aEvents));
-	}
+	file_put_contents(
+		dirname(__FILE__).'/../public_html/vuetify_public/dist/public_events.json',
+		json_encode($aEvents)
+	);
+
 
 ?>
