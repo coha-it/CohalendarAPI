@@ -1,4 +1,5 @@
 <?php 
-    const URL 	      = 'https://your_address_or_url/api';
+    const API_URL 	 = 'https://your_url.com/api';
+    const SHOP_URL 	 = 'https://your_url.com';
     const USERNAME   = 'xx_your_username_xx';
-    const PASSWORD 	= 'xx_your_key_xx';
+    const PASSWORD 	 = 'xx_your_key_xx';
