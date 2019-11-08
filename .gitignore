@@ -1,2 +1,3 @@
 config.php
+public/*.json
 node_modules/

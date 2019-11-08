@@ -6,7 +6,7 @@
 	$client = new ApiClient(URL, USERNAME, PASSWORD);
 
 	// Empty File!
-	file_put_contents('response.json', '');
+	file_put_contents('../private/events.json', '');
 
 	// Go through Articles
 	$aArticles = $client->get('articles')['data'];
@@ -75,8 +75,8 @@
 		var_dump($sArticleName);
 		var_dump($aDates);
 
-		// file_put_contents('response.json', print_r($aPropertyGroup, true), FILE_APPEND);
-		// file_put_contents('response.json', print_r($aArticle, true), FILE_APPEND);
+		file_put_contents('events.json', print_r($aPropertyGroup, true), FILE_APPEND);
+		file_put_contents('events.json', print_r($aArticle, true), FILE_APPEND);
 
 	}
 
