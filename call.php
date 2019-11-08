@@ -31,7 +31,7 @@
 						case 'date':
 							return true;
 							break;
-						
+
 						default:
 							return false;
 							break;
@@ -100,8 +100,8 @@
 						$iSearch += 1;
 					}
 				}
-			} 
-			
+			}
+
 			// You are a searched entry!
 			else {
 				// echo $i ." => ". $aAllDates[$i]."\n";
@@ -116,18 +116,17 @@
 					if($days >= 4) {
 						$aEvents[$iEventCounter]['end'] = $d1;
 						$iSearch = 0;
-					} 
-					
+					}
+
 					// it's small enough to be catched?
 					else {
 						$iSearch += 1;
 					}
 				}
-				
 			}
 		}
 
-		// We Need 
+		// We Need
 		// 1. Dates
 		// 2. Title
 		// 3. Subtitle
@@ -153,8 +152,8 @@
 	// Write all Events to File
 	$jEvents = json_encode($aEvents);
 
-	if($jEvents) {	
-		file_put_contents('../../frontend/public/public_events.json', json_encode($aEvents));
+	if($jEvents) {
+		file_put_contents('../public_html/vuetify_public/dist/public_events.json', json_encode($aEvents));
 	}
 
 ?>
