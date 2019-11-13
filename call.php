@@ -21,6 +21,9 @@
 		$aPropertyOptions 	= $aPropertyGroup['options'];
 		$iPropertyId		= false;
 
+		// If Deactivated
+		if($aArticle['active'] == 0) continue;
+
 		// Find Property Option
 		$aPropertyOption = array_values(
 			array_filter(
