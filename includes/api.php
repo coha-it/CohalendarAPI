@@ -13,7 +13,7 @@ class ApiClient
     ];
     protected $apiUrl;
     protected $cURL;
- 
+
     public function __construct($apiUrl, $username, $apiKey)
     {
         $this->apiUrl = rtrim($apiUrl, '/') . '/';
@@ -34,7 +34,7 @@ class ApiClient
             ['Content-Type: application/json; charset=utf-8']
         );
     }
- 
+
     public function call($url, $method = self::METHOD_GET, $data = [], $params = [])
     {
         if (!in_array($method, $this->validMethods)) {
@@ -53,29 +53,29 @@ class ApiClient
 
         $result = curl_exec($this->cURL);
         $httpCode = curl_getinfo($this->cURL, CURLINFO_HTTP_CODE);
- 
+
         return json_decode($result, 1);
     }
- 
+
     public function get($url, $params = [])
     {
         return $this->call($url, self::METHOD_GET, [], $params);
     }
- 
+
     public function post($url, $data = [], $params = [])
     {
         return $this->call($url, self::METHOD_POST, $data, $params);
     }
- 
+
     public function put($url, $data = [], $params = [])
     {
         return $this->call($url, self::METHOD_PUT, $data, $params);
     }
- 
+
     public function delete($url, $params = [])
     {
         return $this->call($url, self::METHOD_DELETE, [], $params);
     }
- 
+
 
 }

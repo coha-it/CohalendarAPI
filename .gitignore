@@ -23,3 +23,4 @@ yarn-error.log*
 # Custom
 config.php
 node_modules/
+/public_events.json
