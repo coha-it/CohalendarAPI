@@ -20,5 +20,5 @@
     const PASSWORD       = LIVE ? 'LIVE_KEY' : 'DEV_KEY';
 
     // CRM
-    const CRM_URL        = 'https://accountname.centralstationcrm.net/api/'; // people/count.json
+    const CRM_API_URL    = 'https://accountname.centralstationcrm.net/api/'; // people/count.json
     const CRM_API_KEY    = 'your_crm_api_key';
