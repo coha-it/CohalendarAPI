@@ -1,5 +1,24 @@
-<?php 
-    const API_URL 	 = 'https://your_url.com/api';
-    const SHOP_URL 	 = 'https://your_url.com';
-    const USERNAME   = 'xx_your_username_xx';
-    const PASSWORD 	 = 'xx_your_key_xx';
+<?php
+
+    // Trigger Live
+    const LIVE           = 0;
+    const DEV            = !LIVE;
+
+    // URL Parts
+    const PROTOCOL       = 'https://';
+    const SUBDOMAIN      = 'www.';
+    const DOMAIN         = 'corporate-happiness';
+    const TLD            = LIVE ? '.de' : '.tk';
+    const API            = '/api';
+
+    // Build URLs
+    const API_URL        = PROTOCOL.SUBDOMAIN.DOMAIN.TLD.API;
+    const SHOP_URL       = PROTOCOL.SUBDOMAIN.DOMAIN.TLD;
+
+    // Auth
+    const USERNAME       = 'cohapi_1521';
+    const PASSWORD       = LIVE ? 'LIVE_KEY' : 'DEV_KEY';
+
+    // CRM
+    const CRM_URL        = 'https://accountname.centralstationcrm.net/api/'; // people/count.json
+    const CRM_API_KEY    = 'your_crm_api_key';
