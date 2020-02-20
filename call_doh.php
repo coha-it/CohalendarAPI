@@ -21,7 +21,8 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 	$iPropertyGroupId 	= $aArticle['propertyGroup']['id'];
 	$aPropertyGroup 		= $client->get('propertyGroups/'. $iPropertyGroupId )['data'];  // API: Get Property Group
 	$aPropertyOptions 	= array_key_exists('options', $aPropertyGroup) ? $aPropertyGroup['options'] : [];
-	$aImage 						= $client->get('media/'. $aArticle['images'][0]['mediaId'] )['data'];
+	$aImages 						= array_key_exists('images', $aArticle) ? $aArticle['images'] : false;
+	$aImage 						= $aImages ? $client->get('media/'. $aImages[0]['mediaId'] )['data'] : false;
 
 	// If Deactivated
 	if($aArticle['active'] == 0) continue;
@@ -44,8 +45,8 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 		'desc' 						=> $aArticle['description'], // 2 ShortDesc
 		'address' 				=> join(findPropertyValues($aPropertyValues, $aPropertyOptions, ['adresse']), ', '), // 3 Ort - Adresse 
 		'place' 					=> join(findPropertyValues($aPropertyValues, $aPropertyOptions, ['ort']), ', '), // (3.1 Ort-Daten!)
-		'img_name' 				=> $aImage['name'], // 4 Image(s)
-		'img_url' 				=> $aImage['path'], // 4 Image(s)
+		'img_name' 				=> $aImage ? $aImage['name'] : '', // 4 Image(s)
+		'img_url' 				=> $aImage ? $aImage['path'] : '', // 4 Image(s)
 		'date' 						=> $aArticle['mainDetail']['attribute']['cohaEventDate'], // 5 Startet AM
 		'art_url' 				=> getEventUrl($aArticle), // 5.1 Event-Url (replacing-URL) or normal URL for Article
 	];
