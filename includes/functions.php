@@ -8,7 +8,7 @@ function searchDrOliverHaas($arr) {
 		$sName = strtolower($sName);
 		$sName = preg_replace('/[^A-Za-z0-9\-]/', '', $sName);
 
-		// If Found
+		// If Found oliver!
 		if( $sName == 'droliverhaas' ) {
 			$bFound = true;
 			continue;
@@ -18,19 +18,22 @@ function searchDrOliverHaas($arr) {
 }
 
 function findPropertyOption($props, $strings) {
-	return array_values(
+	$prop = array_values(
 		array_filter(
 			$props, 
 			function($var) use ($strings) {
 				return in_array(strtolower($var['name']), $strings);
 			}
 		)
-	)[0];
+	);
+
+	return array_key_exists(0, $prop) ? $prop[0] : [] ;
 }
 
 // @ return id
 function findPropertyOptionId($props, $strings) {
-	return (int) findPropertyOption($props, $strings)['id'];
+	$option = findPropertyOption($props, $strings);
+	return array_key_exists('id', $option) ? (int) $option['id'] : false;
 }
 
 // @ return Array

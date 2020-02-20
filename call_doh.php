@@ -30,15 +30,11 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 	$iPropertyDateId = findPropertyOptionId($aPropertyOptions, ['datum', 'date']) ?? false;
 	$iPropertyOrgId  = findPropertyOptionId($aPropertyOptions, ['vortragende(r)', 'vortragende*r', 'vortragender', 'vortragende']) ?? false;
 
-	// If No Property ID found 
-	if(
+	if( // If No Property ID found 
 		(!$iPropertyDateId) || // If no "Datum" jump to next article
 		(!$iPropertyOrgId) || // If no "Veranstalter" jump to next article
-		(!searchDrOliverHaas($aPropertyOrgValues)) 	// Search for Dr. Oliver Haas. If not found: get along
+		(!searchDrOliverHaas( findPropertyValuesById($aPropertyValues, $iPropertyOrgId) )) // Search for Dr. Oliver Haas. If not found: get along
 	) continue;
-
-	// Find Property Values from Article
-	$aPropertyOrgValues = findPropertyValuesById($aPropertyValues, $iPropertyOrgId);
 
 	// Create New Article
 	// We Need
