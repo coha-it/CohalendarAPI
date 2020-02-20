@@ -1,8 +1,8 @@
 <?php
 
 include_once ('includes/api.php');
-include_once ('includes/functions.php');
 include_once ('includes/config.php');
+include_once ('includes/functions.php');
 
 $client = new ApiClient(API_URL, USERNAME, PASSWORD);
 
@@ -21,15 +21,14 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 	$iPropertyGroupId 	= $aArticle['propertyGroup']['id'];
 	$aPropertyGroup 		= $client->get('propertyGroups/'. $iPropertyGroupId )['data'];  // API: Get Property Group
 	$aPropertyOptions 	= $aPropertyGroup['options'];
-	$iPropertyDateId		= false;
 	$aImage 						= $client->get('media/'. $aArticle['images'][0]['mediaId'] )['data'];
 
 	// If Deactivated
 	if($aArticle['active'] == 0) continue;
 
 	// Find Property ID from "Datum" and from "Vortragender"
-	$iPropertyDateId = findPropertyOptionId($aPropertyOptions, ['datum', 'date']);
-	$iPropertyOrgId  = findPropertyOptionId($aPropertyOptions, ['vortragende(r)', 'vortragende*r', 'vortragender', 'vortragende']);
+	$iPropertyDateId = findPropertyOptionId($aPropertyOptions, ['datum', 'date']) ?? false;
+	$iPropertyOrgId  = findPropertyOptionId($aPropertyOptions, ['vortragende(r)', 'vortragende*r', 'vortragender', 'vortragende']) ?? false;
 
 	// If No Property ID found 
 	if(

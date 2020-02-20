@@ -26,3 +26,5 @@ node_modules/
 /public_events.json
 /public/*
 !/public/.htaccess
+!/public/dist/.htaccess
+

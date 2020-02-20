@@ -93,3 +93,8 @@ function writeDrOliverHaasJson($arr) {
 	// filled - so write file
 	file_put_contents($arr['file'], json_encode($arr['events']));
 }
+
+function writePublicEventsJson($file, $events) {
+	// Write all Events to File
+	file_put_contents($file, json_encode($events));
+}
