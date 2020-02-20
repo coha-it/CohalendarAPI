@@ -2,6 +2,7 @@
 
 // Functions
 function searchDrOliverHaas($arr) {
+	$bFound = false;
 	foreach ($arr as $key => $value) {
 		$sName = $value;
 		$sName = strtolower($sName);
