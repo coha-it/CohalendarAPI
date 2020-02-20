@@ -51,7 +51,7 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 		// You are not a searched entry
 		if($iSearch == 0) {
 			$aEvents[$iEventCounter] = [
-				'name' => $sArticleName,
+				'name' => $sArticle['name'],
 				'start' => $d1,
 				'article_id' => $aArticle['id'],
 				'details' => $aArticle['mainDetail']['attribute']['cohaAsShortdescContent'],

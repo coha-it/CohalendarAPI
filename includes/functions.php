@@ -27,13 +27,20 @@ function findPropertyOption($props, $strings) {
 		)
 	);
 
-	return array_key_exists(0, $prop) ? $prop[0] : [] ;
+	if($prop && array_key_exists(0, $prop)) {
+		return $prop[0];
+	}
+	return false;
 }
 
 // @ return id
 function findPropertyOptionId($props, $strings) {
 	$option = findPropertyOption($props, $strings);
-	return array_key_exists('id', $option) ? (int) $option['id'] : false;
+
+	if($option && array_key_exists('id', $option)) {
+		return (int) $option['id'];
+	}
+	return false;
 }
 
 // @ return Array
