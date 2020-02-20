@@ -1,7 +1,7 @@
 <?php
 
     // Trigger Live
-    const LIVE           = 0;
+    const LIVE           = 1;
     const DEV            = !LIVE;
 
     // URL Parts
