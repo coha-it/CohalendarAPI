@@ -20,7 +20,7 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 	$aPropertyValues 		= $aArticle['propertyValues'];
 	$iPropertyGroupId 	= $aArticle['propertyGroup']['id'];
 	$aPropertyGroup 		= $client->get('propertyGroups/'. $iPropertyGroupId )['data'];  // API: Get Property Group
-	$aPropertyOptions 	= $aPropertyGroup['options'];
+	$aPropertyOptions 	= array_key_exists('options', $aPropertyGroup) ? $aPropertyGroup['options'] : [];
 	$aImage 						= $client->get('media/'. $aArticle['images'][0]['mediaId'] )['data'];
 
 	// If Deactivated
