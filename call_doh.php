@@ -21,6 +21,8 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 	$iPropertyGroupId 	= $aArticle['propertyGroup']['id'];
 	$aPropertyGroup 		= $client->get('propertyGroups/'. $iPropertyGroupId )['data'];  // API: Get Property Group
 	$aPropertyOptions 	= array_key_exists('options', $aPropertyGroup) ? $aPropertyGroup['options'] : [];
+
+
 	$aImages 						= array_key_exists('images', $aArticle) ? $aArticle['images'] : false;
 	$aImage 						= $aImages ? $client->get('media/'. $aImages[0]['mediaId'] )['data'] : false;
 

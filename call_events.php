@@ -18,7 +18,7 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 	$aPropertyValues 		= $aArticle['propertyValues'];
 	$iPropertyGroupId 	= $aArticle['propertyGroup']['id'];
 	$aPropertyGroup 		= $client->get('propertyGroups/'. $iPropertyGroupId )['data'];  // API: Get Property Group
-	$aPropertyOptions 	= $aPropertyGroup['options'];
+	$aPropertyOptions 	= array_key_exists('options', $aPropertyGroup) ? $aPropertyGroup['options'] : [];
 
 	if($aArticle['active'] == 0) continue; // If Deactivated
 
@@ -51,7 +51,7 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 		// You are not a searched entry
 		if($iSearch == 0) {
 			$aEvents[$iEventCounter] = [
-				'name' => $sArticle['name'],
+				'name' => $aArticle['name'],
 				'start' => $d1,
 				'article_id' => $aArticle['id'],
 				'details' => $aArticle['mainDetail']['attribute']['cohaAsShortdescContent'],
