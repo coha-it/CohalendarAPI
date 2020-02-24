@@ -31,15 +31,15 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 
 	// Find Property ID from "Datum" and from "Vortragender"
 	$iPropertyDateId = findPropertyOptionId($aPropertyOptions, ['datum', 'date']) ?? false;
-	$iPropertyOrgId  = findPropertyOptionId($aPropertyOptions, ['vortragende(r)', 'vortragende*r', 'vortragender', 'vortragende']) ?? false;
+	$iPropertySpeakerId  = findPropertyOptionId($aPropertyOptions, ['vortragende(r)', 'vortragende*r', 'vortragender', 'vortragende']) ?? false;
 
-	if( // If No Property ID found 
-		(!$iPropertyDateId) || // If no "Datum" jump to next article
-		(!$iPropertyOrgId) || // If no "Veranstalter" jump to next article
-		(!searchDrOliverHaas( findPropertyValuesById($aPropertyValues, $iPropertyOrgId) )) // Search for Dr. Oliver Haas. If not found: get along
+	if( // Check Property IDs
+		(!$iPropertyDateId) || // If no "Date" ("Datum"): skip and jump to next article
+		(!$iPropertySpeakerId) || // If no "Speaker" ("Vortragender"): skip and jump to next article
+		(!searchDrOliverHaas( findPropertyValuesById($aPropertyValues, $iPropertySpeakerId) )) // Search for "Dr. Oliver Haas". If not found: get along
 	) continue;
 
-	
+
 	// Dates
 	setlocale(LC_TIME, "de_DE");
 	$sDate = $aArticle['mainDetail']['attribute']['cohaEventDate'];
