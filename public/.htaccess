@@ -1,0 +1,11 @@
+# Header set Access-Control-Allow-Origin "*"
+
+<IfModule mod_headers.c>
+   #Header set Access-Control-Allow-Origin https://kalender.corporate-happiness.de
+    
+    # Allowed CORS Origins
+    SetEnvIf Origin "^http(s)?://(.+\.)?(dr-oliver-haas\.de|kalender\.corporate-happiness.de)$" origin_is=$0
+    Header always set Access-Control-Allow-Origin %{origin_is}e env=origin_is
+    
+    Header set Access-Control-Allow-Credentials true
+</IfModule>
