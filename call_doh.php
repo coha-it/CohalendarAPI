@@ -66,9 +66,9 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 
 
 function getMonthName($date) {
-	$monatsnamen = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+	$monatsnamen = ["", "Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 	$iMonth = $date->format('n');
-	$sMonth = $monatsnamen[$iMonth];
+	$sMonth = $monatsnamen[$iMonth ?? 0];
 	return substr($sMonth, 0, 3);
 }
 
