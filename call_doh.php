@@ -64,13 +64,8 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 	$aDrOliverHaas['events'][] = $aEvent;
 }
 
-
-function getMonthName($date) {
-	$monatsnamen = ["", "Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
-	$iMonth = $date->format('n');
-	$sMonth = $monatsnamen[$iMonth ?? 0];
-	return mb_substr($sMonth, 0, 3);
-}
+// Sort Events
+usort($aDrOliverHaas['events'], "fSortByDate");
 
 // Write all Events to File (Only if its big enoug )
 writeDrOliverHaasJson($aDrOliverHaas);

@@ -109,3 +109,14 @@ function writePublicEventsJson($file, $events) {
 	// Write all Events to File
 	file_put_contents($file, json_encode($events));
 }
+
+function getMonthName($date) {
+	$monatsnamen = ["", "Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+	$iMonth = $date->format('n');
+	$sMonth = $monatsnamen[$iMonth ?? 0];
+	return mb_substr($sMonth, 0, 3);
+}
+
+function fSortByDate($a, $b) {
+  return strcmp($a["date"], $b["date"]);
+}
