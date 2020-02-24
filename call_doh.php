@@ -39,9 +39,14 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 		(!searchDrOliverHaas( findPropertyValuesById($aPropertyValues, $iPropertyOrgId) )) // Search for Dr. Oliver Haas. If not found: get along
 	) continue;
 
+	
+	// Dates
+	setlocale(LC_TIME, "de_DE");
+	$sDate = $aArticle['mainDetail']['attribute']['cohaEventDate'];
+	$date = new DateTime($sDate);
+
 	// Create New Article
-	// We Need
-	$aDrOliverHaas['events'][] = [
+	$aEvent = [
 		'id' 							=> $aArticle['id'], // ID
 		'name' 						=> $aArticle['name'], // 1 Name
 		'desc' 						=> $aArticle['description'], // 2 ShortDesc
@@ -49,9 +54,24 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 		'place' 					=> join(findPropertyValues($aPropertyValues, $aPropertyOptions, ['ort']), ', '), // (3.1 Ort-Daten!)
 		'img_name' 				=> $aImage ? $aImage['name'] : '', // 4 Image(s)
 		'img_url' 				=> $aImage ? $aImage['path'] : '', // 4 Image(s)
-		'date' 						=> $aArticle['mainDetail']['attribute']['cohaEventDate'], // 5 Startet AM
+		'date' 						=> $sDate, // 5 Startet AM
+		'd_y' 						=> $date->format('Y'), // Year
+		'd_m' 						=> getMonthName($date), // Mont
+		'd_d' 						=> $date->format('d'), // Day
 		'art_url' 				=> getEventUrl($aArticle), // 5.1 Event-Url (replacing-URL) or normal URL for Article
 	];
+
+	var_dump($aEvent);
+
+	$aDrOliverHaas['events'][] = $aEvent;
+}
+
+
+function getMonthName($date) {
+	$monatsnamen = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+	$iMonth = $date->format('n');
+	$sMonth = $monatsnamen[$iMonth];
+	return substr($sMonth, 0, 3);
 }
 
 // Write all Events to File (Only if its big enoug )
