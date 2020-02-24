@@ -69,7 +69,7 @@ function getMonthName($date) {
 	$monatsnamen = ["", "Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 	$iMonth = $date->format('n');
 	$sMonth = $monatsnamen[$iMonth ?? 0];
-	return substr($sMonth, 0, 3);
+	return mb_substr($sMonth, 0, 3);
 }
 
 // Write all Events to File (Only if its big enoug )
