@@ -22,12 +22,16 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 	$aPropertyGroup 		= $client->get('propertyGroups/'. $iPropertyGroupId )['data'];  // API: Get Property Group
 	$aPropertyOptions 	= array_key_exists('options', $aPropertyGroup) ? $aPropertyGroup['options'] : [];
 
-
+	// Images
 	$aImages 						= array_key_exists('images', $aArticle) ? $aArticle['images'] : false;
 	$aImage 						= $aImages ? $client->get('media/'. $aImages[0]['mediaId'] )['data'] : false;
 
-	// If Deactivated
-	if($aArticle['active'] == 0) continue;
+	
+	// If Deactivated or Expire date Expired
+	if(
+		$aArticle['active'] == 0 || articleIsAvailable($aArticle)
+	) continue;
+
 
 	// Find Property ID from "Datum" and from "Vortragender"
 	$iPropertyDateId = findPropertyOptionId($aPropertyOptions, ['datum', 'date']) ?? false;
@@ -58,6 +62,7 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 		'd_y' 						=> $date->format('Y'), // Year
 		'd_m' 						=> getMonthName($date), // Mont
 		'd_d' 						=> $date->format('d'), // Day
+		'expired'					=> articleIsPast($date),
 		'art_url' 				=> getEventUrl($aArticle), // 5.1 Event-Url (replacing-URL) or normal URL for Article
 	];
 

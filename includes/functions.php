@@ -120,3 +120,27 @@ function getMonthName($date) {
 function fSortByDate($a, $b) {
   return strcmp($a["date"], $b["date"]);
 }
+
+function getExpireDate($aArticle) {
+	// Expire Date
+	$sDate = $aArticle['mainDetail']['attribute']['cohaRequireSpeakerPageUntil'] ?? false;
+
+	if($sDate) {
+		return new DateTime($sDate);
+	}
+	return false;
+}
+
+function articleIsPast($art) {
+	$date = new DateTime();
+	return $date->getTimestamp() > $art->getTimestamp();
+}
+
+function articleIsAvailable($aArticle) {
+	// Dates
+	$dToday = new DateTime();
+	$dDate = getExpireDate($aArticle);
+
+	// If Date is Set and Date is smaller than today
+	return $dDate && $dDate->getTimestamp() < $dToday->getTimestamp();
+}
