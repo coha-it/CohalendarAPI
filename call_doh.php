@@ -29,7 +29,7 @@ foreach ($client->get('articles')['data'] as $i => $value1)
 	
 	// If Deactivated or Expire date Expired
 	if(
-		$aArticle['active'] == 0 || articleIsAvailable($aArticle)
+		$aArticle['active'] == 0 && articleIsExpired($aArticle)
 	) continue;
 
 

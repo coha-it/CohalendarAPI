@@ -136,7 +136,7 @@ function articleIsPast($art) {
 	return $date->getTimestamp() > $art->getTimestamp();
 }
 
-function articleIsAvailable($aArticle) {
+function articleIsExpired($aArticle) {
 	// Dates
 	$dToday = new DateTime();
 	$dDate = getExpireDate($aArticle);
