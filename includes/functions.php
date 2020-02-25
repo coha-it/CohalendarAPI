@@ -141,6 +141,11 @@ function articleIsExpired($aArticle) {
 	$dToday = new DateTime();
 	$dDate = getExpireDate($aArticle);
 
-	// If Date is Set and Date is smaller than today
-	return $dDate && $dDate->getTimestamp() < $dToday->getTimestamp();
+	// If Expire Date exists
+	if($dDate) {
+		// If Date is Set and Date is smaller than today
+		return $dDate && $dDate->getTimestamp() < $dToday->getTimestamp();
+	} else {
+		return $aArticle['active'] == 0;
+	}
 }
