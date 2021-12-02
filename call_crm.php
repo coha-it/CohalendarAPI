@@ -130,5 +130,3 @@ function apiCrm ($sMethod, $sUrl, $aSearch = []) {
 function callOrdersForCrm ($client) {
 
 }
-
-?>

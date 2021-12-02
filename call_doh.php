@@ -1,44 +1,43 @@
 <?php
 
-include_once ('includes/api.php');
-include_once ('includes/config.php');
-include_once ('includes/functions.php');
+include_once('includes/api.php');
+include_once('includes/config.php');
+include_once('includes/functions.php');
 
 $client = new ApiClient(API_URL, USERNAME, PASSWORD);
 
 $aDrOliverHaas = [
-	'file' => realpath(dirname(__FILE__)).'/public/dist/dr_oliver_haas_events.json',
+	'file' => realpath(dirname(__FILE__)) . '/public/dist/dr_oliver_haas_events.json',
 	'events' => []
 ];
 
 // Go through Articles
-foreach ($client->get('articles')['data'] as $i => $value1)
-{
+foreach ($client->get('articles')['data'] as $i => $value1) {
 	// Get Values
 	$iArticleId 				= $value1['id'];
-	$aArticle 					= $client->get('articles/'. $iArticleId )['data']; // API Get Property Group
+	$aArticle 					= $client->get('articles/' . $iArticleId)['data']; // API Get Property Group
 	$aPropertyValues 		= $aArticle['propertyValues'];
 	$iPropertyGroupId 	= $aArticle['propertyGroup']['id'];
-	$aPropertyGroup 		= $client->get('propertyGroups/'. $iPropertyGroupId )['data'];  // API: Get Property Group
+	$aPropertyGroup 		= $client->get('propertyGroups/' . $iPropertyGroupId)['data'];  // API: Get Property Group
 	$aPropertyOptions 	= array_key_exists('options', $aPropertyGroup) ? $aPropertyGroup['options'] : [];
 
 	// Images
 	$aImages 						= array_key_exists('images', $aArticle) ? $aArticle['images'] : false;
-	$aImage 						= $aImages ? $client->get('media/'. $aImages[0]['mediaId'] )['data'] : false;
+	$aImage 						= $aImages ? $client->get('media/' . $aImages[0]['mediaId'])['data'] : false;
 
-	
+
 	// If Deactivated or Expire date Expired
-	if(articleIsExpired($aArticle)) continue;
+	if (articleIsExpired($aArticle)) continue;
 
 
 	// Find Property ID from "Datum" and from "Vortragender"
 	$iPropertyDateId = findPropertyOptionId($aPropertyOptions, ['datum', 'date']) ?? false;
 	$iPropertySpeakerId  = findPropertyOptionId($aPropertyOptions, ['vortragende(r)', 'vortragende*r', 'vortragender', 'vortragende']) ?? false;
 
-	if( // Check Property IDs
+	if ( // Check Property IDs
 		(!$iPropertyDateId) || // If no "Date" ("Datum"): skip and jump to next article
 		(!$iPropertySpeakerId) || // If no "Speaker" ("Vortragender"): skip and jump to next article
-		(!searchDrOliverHaas( findPropertyValuesById($aPropertyValues, $iPropertySpeakerId) )) // Search for "Dr. Oliver Haas". If not found: get along
+		(!searchDrOliverHaas(findPropertyValuesById($aPropertyValues, $iPropertySpeakerId))) // Search for "Dr. Oliver Haas". If not found: get along
 	) continue;
 
 

@@ -1,7 +1,8 @@
-<?php 
+<?php
 
 // Functions
-function searchDrOliverHaas($arr) {
+function searchDrOliverHaas($arr)
+{
 	$bFound = false;
 	foreach ($arr as $key => $value) {
 		$sName = $value;
@@ -9,7 +10,7 @@ function searchDrOliverHaas($arr) {
 		$sName = preg_replace('/[^A-Za-z0-9\-]/', '', $sName);
 
 		// If Found oliver!
-		if( $sName == 'droliverhaas' ) {
+		if ($sName == 'droliverhaas') {
 			$bFound = true;
 			continue;
 		}
@@ -17,34 +18,37 @@ function searchDrOliverHaas($arr) {
 	return $bFound;
 }
 
-function findPropertyOption($props, $strings) {
+function findPropertyOption($props, $strings)
+{
 	$prop = array_values(
 		array_filter(
-			$props, 
-			function($var) use ($strings) {
+			$props,
+			function ($var) use ($strings) {
 				return in_array(strtolower($var['name']), $strings);
 			}
 		)
 	);
 
-	if($prop && array_key_exists(0, $prop)) {
+	if ($prop && array_key_exists(0, $prop)) {
 		return $prop[0];
 	}
 	return false;
 }
 
 // @ return id
-function findPropertyOptionId($props, $strings) {
+function findPropertyOptionId($props, $strings)
+{
 	$option = findPropertyOption($props, $strings);
 
-	if($option && array_key_exists('id', $option)) {
+	if ($option && array_key_exists('id', $option)) {
 		return (int) $option['id'];
 	}
 	return false;
 }
 
 // @ return Array
-function findPropertyValuesById($aProperties, $iId) {
+function findPropertyValuesById($aProperties, $iId)
+{
 	$arr = array_values(
 		array_filter(
 			$aProperties,
@@ -57,7 +61,8 @@ function findPropertyValuesById($aProperties, $iId) {
 }
 
 // @ return Array
-function findPropertyValues($aPropertyValues, $aPropertyOptions, $aWords) {
+function findPropertyValues($aPropertyValues, $aPropertyOptions, $aWords)
+{
 	return findPropertyValuesById(
 		$aPropertyValues,
 		findPropertyOptionId($aPropertyOptions, $aWords)
@@ -65,12 +70,14 @@ function findPropertyValues($aPropertyValues, $aPropertyOptions, $aWords) {
 }
 
 // @ return Array
-function getArticleImages($aArticle) {
+function getArticleImages($aArticle)
+{
 	return array_column($aArticle['images'], 'path');
 }
 
 // @ return String
-function getArticleImage($aArticle) {
+function getArticleImage($aArticle)
+{
 	$imgs = $aArticle['images'];
 	$img = $imgs[0];
 
@@ -78,71 +85,81 @@ function getArticleImage($aArticle) {
 }
 
 // @ return String
-function getEventUrl($aArticle) {
-	return 
-		$aArticle['mainDetail']['attribute']['cohaAsDetailsReplaceLink'] ?? 
-		PROTOCOL.SUBDOMAIN.DOMAIN.TLD.'/detail/index/sArticle/'.$aArticle['id']
-	;
+function getEventUrl($aArticle)
+{
+	return
+		$aArticle['mainDetail']['attribute']['cohaAsDetailsReplaceLink'] ??
+		SHOP_URL . '/detail/index/sArticle/' . $aArticle['id'];
 }
 
 // @ writing to file!
-function debugWriteArticleJson($c) {
-	$file = dirname(__FILE__).'/public/dist/article.json';
-	
-	if( gettype($c) == "string") {
+function debugWriteArticleJson($c)
+{
+	$file = dirname(__FILE__) . '/public/dist/article.json';
+
+	if (gettype($c) == "string") {
 		file_put_contents($file, $c, FILE_APPEND);
 	} else {
-		file_put_contents($file, json_encode($c, JSON_PRETTY_PRINT).',', FILE_APPEND);
+		file_put_contents($file, json_encode($c, JSON_PRETTY_PRINT) . ',', FILE_APPEND);
 	}
 }
 
 // @ writing to file!
-function writeDrOliverHaasJson($arr) {
+function writeDrOliverHaasJson($arr)
+{
 	// If it's empty
-	if(count($arr['events']) <= 2) {return;}
+	if (count($arr['events']) <= 2) {
+		return;
+	}
 
 	// filled - so write file
 	file_put_contents($arr['file'], json_encode($arr['events']));
 }
 
-function writePublicEventsJson($file, $events) {
+function writePublicEventsJson($file, $events)
+{
 	// Write all Events to File
 	file_put_contents($file, json_encode($events));
 }
 
-function getMonthName($date) {
-	$monatsnamen = ["", "Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+function getMonthName($date)
+{
+	$monatsnamen = ["", "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 	$iMonth = $date->format('n');
 	$sMonth = $monatsnamen[$iMonth ?? 0];
 	return mb_substr($sMonth, 0, 3);
 }
 
-function fSortByDate($a, $b) {
-  return strcmp($a["date"], $b["date"]);
+function fSortByDate($a, $b)
+{
+	return strcmp($a["date"], $b["date"]);
 }
 
-function getExpireDate($aArticle) {
+function getExpireDate($aArticle)
+{
 	// Expire Date
 	$sDate = $aArticle['mainDetail']['attribute']['cohaRequireSpeakerPageUntil'] ?? false;
 
-	if($sDate) {
+	if ($sDate) {
 		return new DateTime($sDate);
 	}
 	return false;
 }
 
-function articleIsPast($art) {
+function articleIsPast($art)
+{
 	$date = new DateTime();
 	return $date->getTimestamp() > $art->getTimestamp();
 }
 
-function articleIsExpired($aArticle) {
+function articleIsExpired($aArticle)
+{
 	// Dates
 	$dToday = new DateTime();
 	$dDate = getExpireDate($aArticle);
 
 	// If Expire Date exists
-	if($dDate) {
+	if ($dDate) {
 		// If Date is Set and Date is smaller than today
 		return $dDate && $dDate->getTimestamp() < $dToday->getTimestamp();
 	} else {
