@@ -6,7 +6,7 @@ include_once('includes/functions.php');
 
 $client = new ApiClient(API_URL, USERNAME, PASSWORD);
 $file = dirname(__FILE__) . '/public/dist/public_events.json';
-$iEventCounter = 0;
+$iEvent = 0;
 $aEvents = [];
 
 
@@ -58,7 +58,7 @@ foreach ($client->get('articles')['data'] as $i => $value1) {
 
 		// You are not a searched entry
 		if ($iSearch == 0) {
-			$aEvents[$iEventCounter] = [
+			$aEvents[$iEvent] = [
 				'name' => $aArticle['name'],
 				'start' => $d1,
 				'article_id' => $aArticle['id'],
@@ -69,7 +69,9 @@ foreach ($client->get('articles')['data'] as $i => $value1) {
 				'keywords' => $aArticle['keywords'],
 				'metaTitle' => $aArticle['metaTitle'],
 			];
-			$iEventCounter += 1;
+			$aEvents[$iEvent] = array_filter($aEvents[$iEvent]);
+
+			$iEvent += 1;
 
 			// the next date exists! 
 			if (array_key_exists($i + 1, $aAllDates)) {
@@ -97,7 +99,7 @@ foreach ($client->get('articles')['data'] as $i => $value1) {
 
 				// And its too big?
 				if ($days >= 4) {
-					$aEvents[$iEventCounter]['end'] = $d1;
+					$aEvents[$iEvent]['end'] = $d1;
 					$iSearch = 0;
 				}
 
