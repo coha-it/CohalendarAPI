@@ -166,3 +166,25 @@ function articleIsExpired($aArticle)
 		return $aArticle['active'] == 0;
 	}
 }
+
+
+/**
+ * Check if the value is a valid date
+ *
+ * @param mixed $value
+ *
+ * @return boolean
+ */
+function isDate($value)
+{
+	if (!$value) {
+		return false;
+	} else {
+		$date = date_parse($value);
+		if ($date['error_count'] == 0 && $date['warning_count'] == 0) {
+			return checkdate($date['month'], $date['day'], $date['year']);
+		} else {
+			return false;
+		}
+	}
+}

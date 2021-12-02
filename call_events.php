@@ -41,7 +41,7 @@ foreach ($client->get('articles')['data'] as $i => $value1) {
 
 	$aAllDates = [];
 	foreach ($aAllDatesGer as $sDate) {
-		if ($sDate && strtotime($sDate)) {
+		if (isDate($sDate)) {
 			$dDate = date('Y-m-d', strtotime($sDate));
 			array_push($aAllDates, $dDate);
 		}
