@@ -73,7 +73,7 @@ foreach ($client->get('articles')['data'] as $i => $value1) {
 
 			$iEvent += 1;
 
-			// the next date exists! 
+			// the next date exists!
 			if (array_key_exists($i + 1, $aAllDates)) {
 				$d2 = $aAllDates[$i + 1];
 				$diff = strtotime($d2) - strtotime($d1);
@@ -112,4 +112,6 @@ foreach ($client->get('articles')['data'] as $i => $value1) {
 	}
 }
 
-writePublicEventsJson($file, $aEvents);
+if (count($aEvents) > 1) {
+	writePublicEventsJson($file, $aEvents);
+}

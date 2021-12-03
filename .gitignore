@@ -27,3 +27,4 @@ node_modules/
 /public/*
 !/public/.htaccess
 !/public/dist/.htaccess
+/stats
